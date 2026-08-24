@@ -1,5 +1,15 @@
 const recordForm = document.querySelector(".recordForm");
 
+const recordPatientParams = new URLSearchParams(window.location.search);
+const recordPatientId = recordPatientParams.get("id");
+
+const threeColumnsPatientParams = new URLSearchParams(window.location.search);
+const threeColumnsPatientId = threeColumnsPatientParams.get("id");
+
+console.log("PACIENTE TRES COLUMNAS:", threeColumnsPatientId);
+
+console.log("PACIENTE DEL REGISTRO:", recordPatientId);
+
 const patientParams = new URLSearchParams(window.location.search);
 
 console.log("URL:", window.location.href);
@@ -8,16 +18,23 @@ console.log("SEARCH:", window.location.search);
 const patientId = patientParams.get("id");
 
 const patients = [
-    "Daniel"
+    "Daniel",
+    "María"
 ];
 
 const patientName = document.querySelector("#patientName");
 
 if (patientName) {
-    patientName.textContent = "Daniel";
+    patientName.textContent = patients[patientId];
 }
 
 console.log("ID PACIENTE:", patientId);
+
+const patientRecordLink = document.querySelector("#patientRecordLink");
+
+if (patientRecordLink) {
+    patientRecordLink.href = "index.html?id=" + patientId;
+}
 
 console.log(recordForm);
 
@@ -41,7 +58,7 @@ if (recordForm) {
 
 const record = {
     date: new Date().toISOString(),
-    patientId: 0,
+    patientId: Number(recordPatientId),
     trigger: trigger,
     image: image,
     cognition: cognition,
@@ -78,7 +95,7 @@ if (threeColumnsForm) {
 
 const threeColumns = {
     date: new Date().toISOString(),
-    patientId: 0,
+    patientId: Number(threeColumnsPatientId),
     critica: critica,
     distorsion: distorsion,
     respuestaCompasiva: respuestaCompasiva
