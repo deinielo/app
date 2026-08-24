@@ -36,6 +36,12 @@ if (patientRecordLink) {
     patientRecordLink.href = "index.html?id=" + patientId;
 }
 
+const patientThreeColumnsLink = document.querySelector("#patientThreeColumnsLink");
+
+if (patientThreeColumnsLink) {
+    patientThreeColumnsLink.href = "threecolumns.html?id=" + patientId;
+}
+
 console.log(recordForm);
 
 if (recordForm) {
@@ -210,20 +216,26 @@ const threeColumnsList = document.querySelector("#threeColumnsList");
 
 if (threeColumnsList) {
 
-    threeColumnsRecords
-        .filter(function(threeColumn) {
-            return threeColumn.patientId === Number(patientId);
-        })
-        .forEach(function(threeColumn, index) {
+threeColumnsRecords
+    .map(function(threeColumn, index) {
+        return {
+            threeColumn: threeColumn,
+            index: index
+        };
+    })
+    .filter(function(item) {
+        return item.threeColumn.patientId === Number(patientId);
+    })
+    .forEach(function(item) {
 
         const link = document.createElement("a");
-        link.href = "threecolumns_record.html?id=" + index;
+        link.href = "threecolumns_record.html?id=" + item.index;
         link.classList.add("patientLink");
 
         const card = document.createElement("article");
         card.classList.add("recordCard");
 
-        const date = new Date(threeColumn.date);
+        const date = new Date(item.threeColumn.date);
 
 const formattedDate = date.toLocaleDateString("es-ES");
 const formattedTime = date.toLocaleTimeString("es-ES", {
@@ -235,7 +247,7 @@ const formattedTime = date.toLocaleTimeString("es-ES", {
         title.textContent = formattedDate + " - " + formattedTime;
 
         const subtitle = document.createElement("p");
-        subtitle.textContent = threeColumn.critica;
+        subtitle.textContent = item.threeColumn.critica;
 
         card.appendChild(title);
         card.appendChild(subtitle);
