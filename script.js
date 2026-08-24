@@ -22,6 +22,8 @@ const patients = [
     "María"
 ];
 
+
+
 const patientName = document.querySelector("#patientName");
 
 if (patientName) {
@@ -122,6 +124,63 @@ const threeColumns = {
 
 const records = JSON.parse(localStorage.getItem("records")) || [];
 
+const threeColumnsRecords = JSON.parse(localStorage.getItem("threeColumnsRecords")) || [];
+
+const patientsList = document.querySelector("#patientsList");
+
+if (patientsList) {
+
+    patients.forEach(function(patient, index) {
+
+        const link = document.createElement("a");
+        link.href = "patient.html?id=" + index;
+        link.classList.add("patientLink");
+
+        const card = document.createElement("article");
+        card.classList.add("patientCard");
+
+        const name = document.createElement("h2");
+        name.textContent = patient;
+
+const patientRecords = records.filter(function(record) {
+    return record.patientId === index;
+});
+
+const patientThreeColumns = threeColumnsRecords.filter(function(record) {
+    return record.patientId === index;
+});
+
+const totalRecords = patientRecords.length + patientThreeColumns.length;
+
+const count = document.createElement("p");
+count.textContent = totalRecords + " registros";
+
+const allPatientRecords = patientRecords.concat(patientThreeColumns);
+
+const lastRecord = allPatientRecords.sort(function(a, b) {
+    return new Date(b.date) - new Date(a.date);
+})[0];
+
+const lastRecordText = document.createElement("p");
+
+if (lastRecord) {
+    const lastDate = new Date(lastRecord.date);
+    lastRecordText.textContent = "Último registro: " + lastDate.toLocaleDateString("es-ES");
+} else {
+    lastRecordText.textContent = "Sin registros";
+}
+
+        card.appendChild(name);
+        card.appendChild(count);
+        card.appendChild(lastRecordText);
+        link.appendChild(card);
+
+        patientsList.appendChild(link);
+
+    });
+
+}
+
 console.log(records);
 
 const recordsList = document.querySelector("#recordsList");
@@ -210,7 +269,6 @@ if (recordSensation) {
     recordSensation.textContent = record.sensation + "/10";
 }
 
-const threeColumnsRecords = JSON.parse(localStorage.getItem("threeColumnsRecords")) || [];
 
 const threeColumnsList = document.querySelector("#threeColumnsList");
 
