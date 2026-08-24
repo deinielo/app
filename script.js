@@ -19,7 +19,8 @@ const patientId = patientParams.get("id");
 
 const patients = [
     "Daniel",
-    "María"
+    "María",
+    "Pepe"
 ];
 
 
