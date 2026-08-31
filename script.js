@@ -18,12 +18,24 @@ console.log("SEARCH:", window.location.search);
 const patientId = patientParams.get("id");
 
 const patients = [
-    "Daniel",
-    "María",
-    "Pepe"
+    "Paciente 1",
+    "Paciente 2",
 ];
 
+function showToast(message) {
 
+    const toast = document.querySelector("#toast");
+
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(function() {
+        toast.classList.remove("show");
+    }, 2000);
+
+}
 
 const patientName = document.querySelector("#patientName");
 
@@ -79,7 +91,8 @@ const record = {
         records.push(record);
 
         localStorage.setItem("records", JSON.stringify(records));
-
+        recordForm.reset();
+        showToast("Registro guardado");
         console.log(record);
 
         console.log("Formulario enviado");
@@ -115,7 +128,8 @@ const threeColumns = {
         threeColumnsRecords.push(threeColumns);
 
         localStorage.setItem("threeColumnsRecords", JSON.stringify(threeColumnsRecords));
-
+threeColumnsForm.reset();
+showToast("Ejercicio guardado");
         console.log(threeColumns);
 
         console.log("Tres columnas guardadas");
